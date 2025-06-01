@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Gestión de Proveedores')
-
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Proveedores</li>
+@endsection
 @section('content_header')
     <h1>Gestión de Proveedores</h1>
 @endsection

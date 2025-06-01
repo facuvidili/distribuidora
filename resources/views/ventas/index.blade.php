@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Gestión de Ventas')
-
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Ventas Realizadas</li>
+@endsection
 @section('content_header')
     <h1>Gestión de Ventas</h1>
 @endsection

@@ -36,6 +36,8 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
+        // If the status is successful, we redirect back with a success message.
+        session()->flash('success', 'El email de restablecimiento de contraseña ha sido enviado.');
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))

@@ -7,7 +7,7 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                 <a href="{{ route('admin.settings') }}" class="d-block nav-link {{ request()->routeIs('ventas.create') ? 'active' : '' }}">{{ Auth::user()->name }} <i class="fas fa-gear ml-2"></i> </a> 
+                 <a href="{{ route('admin.settings') }}" class="d-block nav-link {{ request()->routeIs('admin.settings') ? 'active' : '' }}">{{ Auth::user()->name }} <i class="fas fa-gear ml-2"></i> </a> 
                  <label class="d-block nav-link text-muted" style="font-size: 0.8rem;">
                     {{ Auth::user()->rol->descripcion }}
                  </label>

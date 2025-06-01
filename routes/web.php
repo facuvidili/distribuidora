@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/password/change', [PasswordController::class, 'edit'])->name('password.change');
-Route::post('/password/change', [PasswordController::class, 'update'])->name('password.update');
+Route::post('/password/update', [PasswordController::class, 'update'])->name('password.update');
 
 Route::middleware(['auth', 'role:Vendedor'])->group(function () {
     Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role:Vendedor'])->group(function () {
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
     Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
     Route::get('/clientes/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
-    
+
     Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
     Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
     Route::get('/proveedores/edit', [ProveedorController::class, 'edit'])->name('proveedores.edit');

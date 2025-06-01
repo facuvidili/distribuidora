@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('title', 'Editar Venta')
-
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href={{ route('ventas.index') }}>Ventas Realizadas</a></li>
+    <li class="breadcrumb-item active">Editar Venta</li>
+@endsection
 @section('content')
     <div class="container mx-auto p-4 bg-white rounded-lg shadow-md">
         <h1 class="text-2xl font-semibold">Editar Venta #{{ $venta->id }}</h1>
