@@ -46,9 +46,12 @@ Route::middleware(['auth', 'role:Vendedor'])->group(function () {
     Route::post('/ventas/store', [VentaController::class, 'store'])->name('ventas.store');
     Route::get('/ventas/show', [VentaController::class, 'show'])->name('ventas.show');
     Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+    Route::get('/ventas/reporte', [VentaController::class, 'reporte'])->name('ventas.reporte');
+
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
     Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
     Route::get('/clientes/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+    
     Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
     Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
     Route::get('/proveedores/edit', [ProveedorController::class, 'edit'])->name('proveedores.edit');
@@ -62,6 +65,7 @@ Route::middleware(['auth', 'role:Administrador'])->group(function () {
     Route::put('/ventas/{venta}/update', [VentaController::class, 'update'])->name('ventas.update');
     Route::delete('/ventas/{venta}', [VentaController::class, 'destroy'])->name('ventas.destroy');
     Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+    Route::get('/ventas/reporte', [VentaController::class, 'reporte'])->name('ventas.reporte');
 
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
     Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');

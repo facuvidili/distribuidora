@@ -7,6 +7,8 @@ use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Spatie\Browsershot\Browsershot;
 
 class VentaController extends Controller
 {
@@ -148,7 +150,7 @@ class VentaController extends Controller
 
             $venta = Venta::findOrFail($id);
 
-             // Validar disponibilidad de stock antes de crear la venta
+            // Validar disponibilidad de stock antes de crear la venta
             foreach ($request->productos as $index => $producto_id) {
                 $producto = Producto::findOrFail($producto_id);
                 $cantidad = $request->cantidad[$index];
@@ -160,19 +162,19 @@ class VentaController extends Controller
             }
 
             $venta->update(['cliente_id' => $request->cliente_id]);
-            
+
             foreach ($venta->productos as $producto) {
                 // Devolver el stock de los productos que estaban en la venta
                 $producto->increment('cantidad', $producto->pivot->cantidad);
             }
             $venta->productos()->detach();
 
-            
+
             $total = 0;
             foreach ($request->productos as $index => $producto_id) {
                 $producto = Producto::findOrFail($producto_id);
                 $cantidad = $request->cantidad[$index];
-                
+
                 // Restar stock disponible
                 $producto->decrement('cantidad', $cantidad);
 
@@ -216,5 +218,62 @@ class VentaController extends Controller
             Log::error("Error al eliminar venta: " . $e->getMessage());
             return response()->json(['error' => 'Hubo un problema al eliminar la venta.'], 500);
         }
+    }
+
+    public function reporte()
+    {
+        // Obtén la colección de ventas, por ejemplo incluyendo la relación 'cliente'
+        $ventas = Venta::with('cliente')->get();
+
+        // Calcula los datos para los gráficos
+        $ventasPorMes = Venta::selectRaw("
+                                            CASE MONTH(CONVERT_TZ(fecha_venta, '+00:00', '-03:00'))
+                                                WHEN 1 THEN 'Enero'
+                                                WHEN 2 THEN 'Febrero'
+                                                WHEN 3 THEN 'Marzo'
+                                                WHEN 4 THEN 'Abril'
+                                                WHEN 5 THEN 'Mayo'
+                                                WHEN 6 THEN 'Junio'
+                                                WHEN 7 THEN 'Julio'
+                                                WHEN 8 THEN 'Agosto'
+                                                WHEN 9 THEN 'Septiembre'
+                                                WHEN 10 THEN 'Octubre'
+                                                WHEN 11 THEN 'Noviembre'
+                                                WHEN 12 THEN 'Diciembre'
+                                            END as mes, 
+                                            SUM(total) as total
+                                        ")
+            ->groupBy('mes')
+            ->orderByRaw("FIELD(mes, 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre')")
+            ->pluck('total', 'mes');
+
+        $mejoresVendedores = Venta::selectRaw('user_id, SUM(total) as total')
+            ->groupBy('user_id')
+            ->pluck('total', 'user_id');
+
+        $clientesTop = Venta::selectRaw('cliente_id, SUM(total) as total')
+            ->groupBy('cliente_id')
+            ->pluck('total', 'cliente_id');
+
+        return view('ventas.reporte', compact('ventas', 'ventasPorMes', 'mejoresVendedores', 'clientesTop'));
+    }
+
+    public function reportPdf()
+    {
+        // Supponela misma consulta de datos
+        $ventas = Venta::with('cliente')->get();
+        // ... (los cálculos de ventasPorMes, etc.)
+
+        // Generar la imagen de la vista de reporte "dinámico" con gráficos
+        $chartUrl = route('ventas.report'); // La ruta que renderiza la vista con Chart.js
+        Browsershot::url($chartUrl)
+            ->noSandbox()
+            ->windowSize(1200, 800)
+            ->save(storage_path('app/public/reporte_graficos.png'));
+
+        $pdf = Pdf::loadView('reports.sales_pdf', compact('ventas'));
+        // En la vista reports/sales_pdf.blade.php, en lugar de los canvas se insertaría:
+        // <img src="{{ asset('storage/reporte_graficos.png') }}" style="width:100%;">
+        return $pdf->download('Reporte_Ventas.pdf');
     }
 }

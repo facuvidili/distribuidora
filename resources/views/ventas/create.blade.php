@@ -14,7 +14,7 @@
             @csrf
 
             <!-- Selección de Cliente -->
-            <div class="mb-4">
+            <div class="mb-4 col-4">
                 <label for="cliente" class="block text-sm font-medium text-gray-700">Cliente</label>
                 <select id="cliente" name="cliente_id" class="form-select w-full mt-1 px-3 py-2 border rounded-md">
                     @foreach ($clientes as $cliente)

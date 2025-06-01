@@ -12,6 +12,11 @@
             <a href="{{ route('ventas.create') }}" class="btn btn-success">
                 <i class="fas fa-plus-circle"></i> Nueva Venta
             </a>
+            <!-- Botón para generar el reporte de ventas con gráficos -->
+            <a href="{{ route('ventas.reporte') }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-chart-line"></i> Generar Reporte de Ventas
+            </a>
+
         </div>
         <div class="card-body">
             <table id="ventas-table" class="table table-striped">
@@ -39,8 +44,6 @@
                                     <a href="{{ route('ventas.edit', $venta->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
-
-
                                     <form action="{{ route('ventas.destroy', $venta->id) }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
