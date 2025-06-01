@@ -1,0 +1,26 @@
+
+
+    #tarjetas-contenedor {
+        display: table;
+        width: 100%;
+    }
+
+    .tarjeta-row {
+        display: table-row;
+        columns: 2;
+    }
+
+    .tarjeta-empresa {
+        display: table-cell;
+        width: 50%; /* Dos columnas en la impresión */
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 12px;
+        text-align: center;
+        page-break-inside: avoid;
+        vertical-align: top;
+    }
+
+    .logo {
+        width: 40px;
+    }
