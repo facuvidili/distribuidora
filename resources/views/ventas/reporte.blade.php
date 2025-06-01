@@ -151,7 +151,7 @@
             <canvas id="ventasPorMes"></canvas>
         </div>
 
-        <div style="display: flex; gap: 0px;">
+        <div class="chart-container" style="display: flex; gap: 0px;">
             <!-- Gráfico: Mejores Vendedores -->
             <div style="flex: 1; height: 300px;">
                 <canvas id="mejoresVendedores"></canvas>
