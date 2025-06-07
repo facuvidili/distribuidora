@@ -14,45 +14,47 @@
             <a href=" {{ route('user.create') }}" class="btn btn-success"><i class="fas fa-user-plus"></i> Agregar Usuario</a>
         </div>
         <div class="card-body">
-            <table id="users-table" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
+            <div class="table-responsive">
+                <table id="users-table" class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->rol ? ucfirst($user->rol->descripcion) : 'Sin rol' }}</td>
-                            <td>
-                                <span class="badge {{ $user->activo ? 'badge-success' : 'badge-danger' }}">
-                                    {{ $user->activo ? 'Activo' : 'Inactivo' }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Editar</a>
-                                <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                    style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-danger btn-sm eliminarUser"
-                                        data-id="{{ $user->id }}">
-                                        <i class="fas fa-trash-alt"> </i> Eliminar
-                                    </button>
-                                </form>
-                            </td>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->rol ? ucfirst($user->rol->descripcion) : 'Sin rol' }}</td>
+                                <td>
+                                    <span class="badge {{ $user->activo ? 'badge-success' : 'badge-danger' }}">
+                                        {{ $user->activo ? 'Activo' : 'Inactivo' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> <span>Editar</span></a>
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                        style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger btn-sm eliminarUser"
+                                            data-id="{{ $user->id }}">
+                                            <i class="fas fa-trash-alt"> </i> <span>Eliminar</span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

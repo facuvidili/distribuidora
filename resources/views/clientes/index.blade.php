@@ -16,46 +16,48 @@
             </a>
         </div>
         <div class="card-body">
-            <table id="clientes-table" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Dirección</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($clientes as $cliente)
+            <div class="table-responsive">
+                <table id="clientes-table" class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ $cliente->dni }}</td>
-                            <td>{{ $cliente->nombre }}</td>
-                            <td>{{ $cliente->email }}</td>
-                            <td>{{ $cliente->telefono }}</td>
-                            <td>{{ $cliente->direccion }}</td>
-                            <td>
-                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                @if (auth()->user()->rol->descripcion === 'Administrador')
-                                    <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-sm eliminarCliente"
-                                            data-id="{{ $cliente->id }}">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </button>
-                                    </form>
-                                @endif
-
-                            </td>
+                            <th>DNI</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Acciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($clientes as $cliente)
+                            <tr>
+                                <td>{{ $cliente->dni }}</td>
+                                <td>{{ $cliente->nombre }}</td>
+                                <td>{{ $cliente->email }}</td>
+                                <td>{{ $cliente->telefono }}</td>
+                                <td>{{ $cliente->direccion }}</td>
+                                <td>
+                                    <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i> <span>Editar</span>
+                                    </a>
+                                    @if (auth()->user()->rol->descripcion === 'Administrador')
+                                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm eliminarCliente"
+                                                data-id="{{ $cliente->id }}">
+                                                <i class="fas fa-trash-alt"></i> <span>Eliminar</span>
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

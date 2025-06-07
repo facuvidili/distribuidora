@@ -18,10 +18,21 @@
             </a>
         </div>
 
-        <form method="POST" action="{{ route('empresa.update', $empresa->id) }}">
+        <form method="POST" action="{{ route('empresa.update', $empresa->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="d-flex flex-column align-items-center mb-4">
+                <label for="logoInput" class="cursor-pointer">
+                    <img id="logoPreview" src="{{ asset($empresa->logo ?? 'dist/img/default_logo.png') }}"
+                        alt="Logo de la empresa" class="img-thumbnail rounded shadow-lg"
+                        style="width: 150px; height: 150px; object-fit: contain;">
+                </label>
+                <input type="file" id="logoInput" name="logo" class="d-none" accept="image/*">
 
+                <button type="button" id="changeLogoBtn" class="btn btn-primary mt-2">
+                    <i class="fas fa-image"></i> Cambiar Imagen
+                </button>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label for="nombre" class="block text-gray-700 font-semibold">Nombre de la Empresa</label>
@@ -31,8 +42,8 @@
 
                 <div>
                     <label for="direccion" class="block text-gray-700 font-semibold">Dirección</label>
-                    <input type="text" name="direccion" id="direccion" value="{{ old('direccion', $empresa->direccion) }}"
-                        class="form-control" required>
+                    <input type="text" name="direccion" id="direccion"
+                        value="{{ old('direccion', $empresa->direccion) }}" class="form-control" required>
                 </div>
 
                 <div>
@@ -55,4 +66,22 @@
             </div>
         </form>
     </div>
+@endsection
+@section('js')
+    <script>
+        document.getElementById('logoInput').addEventListener('change', function(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('logoPreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        document.getElementById('changeLogoBtn').addEventListener('click', function() {
+            document.getElementById('logoInput').click(); // Abre el selector de archivos
+        });
+    </script>
+
 @endsection

@@ -12,6 +12,11 @@
 @section('content')
     @if ($empresa)
         <div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
+            <div class="text-center mb-4">
+                <img src="{{ asset($empresa->logo ?? asset('dist/img/default_logo.jpg')) }}" alt="Logo de la empresa"
+                    class="img-thumbnail rounded shadow-lg" style="width: 150px; height: 150px; object-fit: contain;">
+            </div>
+
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Nombre:</label>
                 <p class="text-lg font-semibold">{{ $empresa->nombre }}</p>
@@ -47,7 +52,7 @@
                     <div class="tarjeta-row" style="display: table-row; columns: 2;">
                         @for ($i = 0; $i < 8; $i++)
                             <div class="tarjeta-empresa"
-                                                style="
+                                style="
                                                     display: table-cell; 
                                                     width: 50%; 
                                                     border: 2px solid #1c2833; 
@@ -57,11 +62,11 @@
                                                     text-align: center; 
                                                     page-break-inside: avoid; 
                                                     vertical-align: top;
-                                                    background: #ffffe8; /* Color neutro y sofisticado */
+                                                    background: #ecefea;
                                                     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
                                                     font-family: 'Arial', sans-serif;">
 
-                                <img src="{{ asset('dist/img/distribuidora.jpg') }}" alt="Logo Empresa" class="logo"
+                                <img src="{{ asset($empresa->logo ?? asset('dist/img/default_logo.jpg')) }}" alt="Logo Empresa" class="logo"
                                     style="
                                         width: 60px; 
                                         height: 60px; 
@@ -81,13 +86,16 @@
 
                                 <p
                                     style="color: #2c3e50; margin: 8px 0; font-weight: 500; font-family: 'Verdana', sans-serif;">
-                                    <i class="fas fa-map-marker-alt"></i> {{ $empresa->direccion }}</p>
+                                    <i class="fas fa-map-marker-alt"></i> {{ $empresa->direccion }}
+                                </p>
                                 <p
                                     style="color: #2c3e50; margin: 8px 0; font-weight: 500; font-family: 'Verdana', sans-serif;">
-                                    <i class="fas fa-phone"></i> {{ $empresa->telefono }}</p>
+                                    <i class="fas fa-phone"></i> {{ $empresa->telefono }}
+                                </p>
                                 <p
                                     style="color: #2c3e50; margin: 8px 0; font-weight: 500; font-family: 'Verdana', sans-serif;">
-                                    <i class="fas fa-envelope"></i> {{ $empresa->email }}</p>
+                                    <i class="fas fa-envelope"></i> {{ $empresa->email }}
+                                </p>
 
                                 <hr style="width: 80%; border-top: 1px solid #bbb;">
 

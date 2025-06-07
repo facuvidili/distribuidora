@@ -55,26 +55,28 @@
     <!-- Tabla de Últimas Ventas -->
     <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-lg font-semibold text-gray-700 mb-3">Últimas Ventas</h3>
-        <table class="table-auto w-full text-left bg-white rounded-lg overflow-hidden shadow-lg">
-            <thead>
-                <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
-                    <th class="px-4 py-2">Número</th>
-                    <th class="px-4 py-2">Cliente</th>
-                    <th class="px-4 py-2">Fecha</th>
-                    <th class="px-4 py-2 text-right">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($ultimasVentas as $venta)
-                    <tr class="border-b">
-                        <td class="px-4 py-2">{{ $venta->id }}</td>
-                        <td class="px-4 py-2">{{ $venta->cliente->nombre ?? 'Sin asignar' }}</td>
-                        <td class="px-4 py-2">{{ $venta->fecha_venta }}</td>
-                        <td class="px-4 py-2 text-right">${{ number_format($venta->total, 2) }}</td>
+        <div class="table-responsive mb-4">
+            <table class="table-auto w-full text-left bg-white rounded-lg overflow-hidden shadow-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
+                        <th class="px-4 py-2">Número</th>
+                        <th class="px-4 py-2">Cliente</th>
+                        <th class="px-4 py-2">Fecha</th>
+                        <th class="px-4 py-2 text-right">Total</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($ultimasVentas as $venta)
+                        <tr class="border-b">
+                            <td class="px-4 py-2">{{ $venta->id }}</td>
+                            <td class="px-4 py-2">{{ $venta->cliente->nombre ?? 'Sin asignar' }}</td>
+                            <td class="px-4 py-2">{{ $venta->fecha_venta }}</td>
+                            <td class="px-4 py-2 text-right">${{ number_format($venta->total, 2) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
 @endsection

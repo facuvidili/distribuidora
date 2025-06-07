@@ -16,47 +16,49 @@
         </a>
     </div>
     <div class="card-body">
-        <table id="productos-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Proveedor</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($productos as $producto)
-                <tr>
-                    <td>{{ $producto->codigo }}</td>
-                    <td>{{ $producto->nombre }}</td>
-                    <td>${{ number_format($producto->precio, 2) }}</td>
-                    <td>{{ $producto->cantidad }}</td>
-                    <td>
-                        @if ($producto->proveedor)
-                            {{ $producto->proveedor->razon_social }}
-                        @else
-                            <span class="text-gray-500">No asignado</span>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-sm eliminarProducto" data-id="{{ $producto->id }}">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="productos-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Proveedor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($productos as $producto)
+                    <tr>
+                        <td>{{ $producto->codigo }}</td>
+                        <td>{{ $producto->nombre }}</td>
+                        <td>${{ number_format($producto->precio, 2) }}</td>
+                        <td>{{ $producto->cantidad }}</td>
+                        <td>
+                            @if ($producto->proveedor)
+                                {{ $producto->proveedor->razon_social }}
+                            @else
+                                <span class="text-gray-500">No asignado</span>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i> <span>Editar</span>
+                            </a>
+                            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-danger btn-sm eliminarProducto" data-id="{{ $producto->id }}">
+                                    <i class="fas fa-trash-alt"></i> <span>Eliminar</span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

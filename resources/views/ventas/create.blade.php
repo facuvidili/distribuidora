@@ -26,8 +26,8 @@
             <!-- Selección de Productos -->
             <div class="flex items-center mb-2">
                 <label for="productos" class="block text-sm font-medium text-gray-700">Productos</label>
-                <button type="button" id="agregarProducto" class="btn btn-primary" style="margin-left: 14em;">
-                    <i class="fas fa-plus"></i>Agregar Producto
+                <button type="button" id="agregarProducto" class="btn btn-primary" style="margin-left: 11em;">
+                    <i class="fas fa-plus"></i> <span>Agregar Producto</span>
                 </button>
             </div>
             <div id="productos-container" class="space-y-2">

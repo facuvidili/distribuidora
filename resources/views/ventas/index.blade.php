@@ -21,46 +21,48 @@
 
         </div>
         <div class="card-body">
-            <table id="ventas-table" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Número</th>
-                        <th>Cliente</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($ventas as $venta)
+            <div class="table-responsive">
+                <table id="ventas-table" class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ $venta->id }}</td>
-                            <td>{{ $venta->cliente->nombre ?? 'Sin asignar' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d-m-Y H:i:s') }}</td>
-                            <td>${{ number_format($venta->total, 2) }}</td>
-                            <td>
-                                <a href="{{ route('ventas.show', $venta->id) }}" class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i> Ver
-                                </a>
-                                @if (auth()->user()->rol->descripcion === 'Administrador')
-                                    <a href="{{ route('ventas.edit', $venta->id) }}" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                    <form action="{{ route('ventas.destroy', $venta->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-sm eliminarVenta"
-                                            data-id="{{ $venta->id }}">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </button>
-                                    </form>
-                                @endif
-                            </td>
+                            <th>Número</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($ventas as $venta)
+                            <tr>
+                                <td>{{ $venta->id }}</td>
+                                <td>{{ $venta->cliente->nombre ?? 'Sin asignar' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d-m-Y H:i:s') }}</td>
+                                <td>${{ number_format($venta->total, 2) }}</td>
+                                <td>
+                                    <a href="{{ route('ventas.show', $venta->id) }}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i> <span>Ver</span>
+                                    </a>
+                                    @if (auth()->user()->rol->descripcion === 'Administrador')
+                                        <a href="{{ route('ventas.edit', $venta->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-edit"></i> <span>Editar</span>
+                                        </a>
+                                        <form action="{{ route('ventas.destroy', $venta->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm eliminarVenta"
+                                                data-id="{{ $venta->id }}">
+                                                <i class="fas fa-trash-alt"></i> <span>Eliminar</span>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
