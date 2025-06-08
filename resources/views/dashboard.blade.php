@@ -45,7 +45,7 @@
         <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between border-l-4 border-indigo-500">
             <div>
                 <h4 class="text-lg font-semibold text-gray-700">Balance General</h4>
-                <p class="text-2xl font-bold text-indigo-500">$23,540.00</p>
+                <p class="text-2xl font-bold text-indigo-500">${{ $balanceGeneral }}</p>
                 <small class="text-gray-500">Última actualización</small>
             </div>
             <i class="fas fa-chart-line text-4xl text-indigo-500"></i>

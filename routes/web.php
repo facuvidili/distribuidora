@@ -28,7 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -96,13 +96,14 @@ Route::middleware(['auth', 'role:Administrador'])->group(function () {
     Route::post('/empresa/store', [EmpresaController::class, 'store'])->name('empresa.store');
     Route::get('/empresa/{empresa}/edit', [EmpresaController::class, 'edit'])->name('empresa.edit');
     Route::put('/empresa/{empresa}/update', [EmpresaController::class, 'update'])->name('empresa.update');
-    
+
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::put('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/user/{user}/cambiar-estado', [UserController::class, 'cambiarEstado'])->name('user.cambiar-estado');
 });
 
 

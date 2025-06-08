@@ -14,9 +14,10 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'ventasCount' => Venta::count(),
-            'clientesCount' => Cliente::count(),
-            'proveedoresCount' => Proveedor::count(),
+            'clientesCount' => Cliente::where('activo', true)->count(),
+            'proveedoresCount' => Proveedor::where('activo', true)->count(),
             'ultimasVentas' => Venta::latest()->limit(5)->get(),
+            'balanceGeneral' => Venta::sum('total'),
             'user' => Auth::user()
         ]);
     }

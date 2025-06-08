@@ -39,14 +39,18 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> <span>Editar</span></a>
-                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>
+                                        <span>Editar</span></a>
+                                    <form action="{{ route('user.cambiar-estado', $user->id) }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-sm eliminarUser"
-                                            data-id="{{ $user->id }}">
-                                            <i class="fas fa-trash-alt"> </i> <span>Eliminar</span>
+                                        @method('POST')
+                                        <button type="button"
+                                            class="btn btn-sm {{ $user->activo == 1 ? 'btn-danger' : 'btn-success' }} cambiarEstado"
+                                            data-id="{{ $user->id }}"
+                                            data-estado="{{ $user->activo == 1 ? 'activo' : 'inactivo' }}">
+                                            <i class="fas {{ $user->activo == 1 ? 'fa-ban' : 'fa-check-circle' }}"></i>
+                                            <span>{{ $user->activo ? 'Desactivar' : 'Activar' }}</span>
                                         </button>
                                     </form>
                                 </td>
@@ -69,41 +73,62 @@
             });
         });
 
-        document.querySelectorAll('.eliminarUser').forEach(button => {
+        document.querySelectorAll('.cambiarEstado').forEach(button => {
             button.addEventListener('click', function() {
                 let userId = this.dataset.id;
+                let estadoActual = this.dataset.estado;
+                let nuevoEstado = estadoActual === 'activo' ? 'inactivo' : 'activo';
+                let accion2 = estadoActual === 'activo' ? 'desactivado' : 'activado';
+
+                let accion = nuevoEstado === 'activo' ? 'Activar' : 'Desactivar';
 
                 Swal.fire({
-                    title: "¿Eliminar este usuario?",
-                    text: "Esta acción no se puede deshacer",
+                    title: `¿${accion} este usuario?`,
+                    text: `El usuario será ${accion2}.`,
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Sí, eliminar",
+                    confirmButtonColor: "#28a745",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: `Sí, ${accion}`,
                     cancelButtonText: "Cancelar"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/user/${userId}`, {
-                                method: 'DELETE',
+                        fetch(`/user/${userId}/cambiar-estado`, {
+                                method: 'POST',
                                 headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                }
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    estado: nuevoEstado
+                                })
                             })
                             .then(response => response.json())
-                            .then(() => {
-                                Swal.fire({
-                                    title: "Eliminado",
-                                    text: "El usuario ha sido eliminado correctamente.",
-                                    icon: "success",
-                                    showConfirmButton: false
-                                });
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 2000);
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        title: "Actualizado",
+                                        text: `El usuario ahora está ${nuevoEstado}.`,
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        location.reload(); // Recarga la página para reflejar el cambio
+                                    });
+
+                                    // Cambia el botón dinámicamente sin recargar
+                                    this.dataset.estado = nuevoEstado;
+                                }
                             })
-                            .catch(() => Swal.fire("Error",
-                                "Hubo un problema al eliminar el usuario.", "error"));
+                            .catch(error => {
+                                console.error("Error en la petición:",
+                                error); // Muestra el error en la consola
+                                Swal.fire("Error",
+                                    `Hubo un problema al cambiar el estado. Detalles: ${error.message}`,
+                                    "error");
+                            });
+
                     }
                 });
             });

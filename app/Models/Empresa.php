@@ -13,5 +13,5 @@ class Empresa extends Model
     protected $table = 'empresa';
     
     // Campos que se pueden actualizar masivamente
-    protected $fillable = ['nombre', 'direccion', 'telefono', 'email'];
+    protected $fillable = ['nombre', 'direccion', 'telefono', 'email', 'logo'];
 }

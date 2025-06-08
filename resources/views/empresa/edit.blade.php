@@ -23,7 +23,7 @@
             @method('PUT')
             <div class="d-flex flex-column align-items-center mb-4">
                 <label for="logoInput" class="cursor-pointer">
-                    <img id="logoPreview" src="{{ asset($empresa->logo ?? 'dist/img/default_logo.png') }}"
+                    <img id="logoPreview" src="{{ asset($empresa->logo ?? asset('dist/img/default_logo.jpg')) }}"
                         alt="Logo de la empresa" class="img-thumbnail rounded shadow-lg"
                         style="width: 150px; height: 150px; object-fit: contain;">
                 </label>

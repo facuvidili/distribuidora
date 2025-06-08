@@ -13,7 +13,7 @@ class UserController extends Controller
     // Mostrar listado de usuarios
     public function index()
     {
-        $users = User::where('activo',1)->with('rol')->paginate(10); // Paginamos los resultados
+        $users = User::with('rol')->paginate(10); // Paginamos los resultados
         return view('user.index', compact('users'));
     }
 
@@ -72,17 +72,38 @@ class UserController extends Controller
     }
 
     // Eliminar usuario
-   public function destroy($id)
+    public function destroy($id)
     {
         try {
             $user = User::findOrFail($id);
             // Si el proveedor no tiene productos, se marca como inactivo en lugar de eliminarlo
-            $user->update(['activo' => 0]);
+            $user->delete();
             return response()->json(['success' => 'Usuario eliminado correctamente.']);
-
         } catch (\Exception $e) {
             Log::error("Error al desactivar usuario: " . $e->getMessage());
             return response()->json(['error' => 'Hubo un problema al eliminar el usuario.'], 500);
+        }
+    }
+
+    public function cambiarEstado($id, Request $request)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $nuevoEstado = $user->activo ? 0 : 1;
+            $user->activo = $nuevoEstado;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'mensaje' => "Estado del usuario cambiado correctamente.",
+                'nuevo_estado' => $nuevoEstado ? 'activo' : 'inactivo'
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error("Usuario no encontrado (ID: $id): " . $e->getMessage());
+            return response()->json(['error' => "Usuario no encontrado."], 404);
+        } catch (\Exception $e) {
+            Log::error("Error en cambiarEstado (ID: $id): " . $e->getMessage());
+            return response()->json(['error' => "Error interno del servidor."], 500);
         }
     }
 }
