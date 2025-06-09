@@ -11,7 +11,7 @@
                         </h1>
                     </div>
                     <div class="card-body">
-                        <p class="login-box-msg text-xl font-semibold text-gray-700 dark:text-white">
+                        <p class="login-box-msg text-xl font-semibold text-gray-700">
                             🔑 Inicio de Sesión
                         </p>
 

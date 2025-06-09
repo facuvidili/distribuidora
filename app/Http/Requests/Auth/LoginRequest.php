@@ -41,11 +41,22 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // Buscar al usuario con el email ingresado
+        $user = \App\Models\User::where('email', $this->input('email'))->first();
+
+        // Validar si existe y si está activo
+        if ($user && $user->activo == 0) {
+            throw ValidationException::withMessages([
+                'failure' => trans('Tu cuenta está desactivada. Contacta al administrador.')
+            ]);
+        }
+
+        // Autenticar si el usuario es válido y activo
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'failure' => trans('auth.failed'),
+                'failure' => trans('Falla al iniciar sesión. Por favor, verifica tus credenciales.')
             ]);
         }
 
@@ -80,6 +91,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
     }
 }
