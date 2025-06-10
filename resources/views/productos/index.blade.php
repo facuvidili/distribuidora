@@ -17,7 +17,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table id="productos-table" class="table table-striped">
+            <table id="productos-table" class="table table-striped data-table">
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -62,17 +62,9 @@
     </div>
 </div>
 @endsection
-
+@vite('resources/js/datatable.js')
 @section('js')
 <script>
-    $(document).ready(function() {
-        $('#productos-table').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-            }
-        });
-    });
-
     document.querySelectorAll('.eliminarProducto').forEach(button => {
         button.addEventListener('click', function() {
             let productoId = this.dataset.id;

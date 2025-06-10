@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="proveedores-table" class="table table-striped">
+                <table id="proveedores-table" class="table table-striped data-table">
                     <thead>
                         <tr>
                             <th>DNI</th>
@@ -61,17 +61,9 @@
         </div>
     </div>
 @endsection
-
+@vite('resources/js/datatable.js')
 @section('js')
     <script>
-        $(document).ready(function() {
-            $('#proveedores-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                }
-            });
-        });
-
         document.querySelectorAll('.eliminarProveedor').forEach(button => {
             button.addEventListener('click', function() {
                 let proveedorId = this.dataset.id;

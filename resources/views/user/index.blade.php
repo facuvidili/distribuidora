@@ -15,7 +15,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="users-table" class="table table-striped">
+                <table id="users-table" class="table table-striped data-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -41,18 +41,20 @@
                                 <td>
                                     <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>
                                         <span>Editar</span></a>
-                                    <form action="{{ route('user.cambiar-estado', $user->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('POST')
-                                        <button type="button"
-                                            class="btn btn-sm {{ $user->activo == 1 ? 'btn-danger' : 'btn-success' }} cambiarEstado"
-                                            data-id="{{ $user->id }}"
-                                            data-estado="{{ $user->activo == 1 ? 'activo' : 'inactivo' }}">
-                                            <i class="fas {{ $user->activo == 1 ? 'fa-ban' : 'fa-check-circle' }}"></i>
-                                            <span>{{ $user->activo ? 'Desactivar' : 'Activar' }}</span>
-                                        </button>
-                                    </form>
+                                    @if (auth()->user()->id !== $user->id)
+                                        <form action="{{ route('user.cambiar-estado', $user->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('POST')
+                                            <button type="button"
+                                                class="btn btn-sm {{ $user->activo == 1 ? 'btn-danger' : 'btn-success' }} cambiarEstado"
+                                                data-id="{{ $user->id }}"
+                                                data-estado="{{ $user->activo == 1 ? 'activo' : 'inactivo' }}">
+                                                <i class="fas {{ $user->activo == 1 ? 'fa-ban' : 'fa-check-circle' }}"></i>
+                                                <span>{{ $user->activo ? 'Desactivar' : 'Activar' }}</span>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -62,17 +64,9 @@
         </div>
     </div>
 @endsection
-
+@vite('resources/js/datatable.js')
 @section('js')
     <script>
-        $(document).ready(function() {
-            $('#users-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                }
-            });
-        });
-
         document.querySelectorAll('.cambiarEstado').forEach(button => {
             button.addEventListener('click', function() {
                 let userId = this.dataset.id;

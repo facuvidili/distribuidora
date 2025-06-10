@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="ventas-table" class="table table-striped">
+                <table id="ventas-table" class="table table-striped data-table">
                     <thead>
                         <tr>
                             <th>Número</th>
@@ -66,17 +66,9 @@
         </div>
     </div>
 @endsection
-
+@vite('resources/js/datatable.js')
 @section('js')
     <script>
-        $(document).ready(function() {
-            $('#ventas-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                }
-            });
-        });
-
         document.querySelectorAll('.eliminarVenta').forEach(button => {
             button.addEventListener('click', function() {
                 let ventaId = this.dataset.id;

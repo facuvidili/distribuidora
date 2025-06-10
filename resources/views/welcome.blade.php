@@ -841,7 +841,7 @@
                         class="btn btn-outline hover:bg-gray-700 shadow-md px-4 py-2 dark:text-white">
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </a>
-                     {{-- <a href="{{ route('register') }}" class="ml-4 btn btn-success shadow-md px-4 py-2 dark:text-white">
+                    {{-- <a href="{{ route('register') }}" class="ml-4 btn btn-success shadow-md px-4 py-2 dark:text-white">
                         <i class="fas fa-user-plus"></i> Registrarse
                     </a> --}}
 
