@@ -39,7 +39,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>
+                                    <a href="{{ route('user.edit', $user->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>
                                         <span>Editar</span></a>
                                     @if (auth()->user()->id !== $user->id)
                                         <form action="{{ route('user.cambiar-estado', $user->id) }}" method="POST"
