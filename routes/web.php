@@ -41,44 +41,33 @@ Route::middleware('auth')->group(function () {
 Route::get('/password/change', [PasswordController::class, 'edit'])->name('password.change');
 Route::post('/password/update', [PasswordController::class, 'update'])->name('password.update');
 
-Route::middleware(['auth', 'role:Vendedor'])->group(function () {
-    Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
-    Route::post('/ventas/store', [VentaController::class, 'store'])->name('ventas.store');
-    Route::get('/ventas/show', [VentaController::class, 'show'])->name('ventas.show');
-    Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
-    Route::get('/ventas/reporte', [VentaController::class, 'reporte'])->name('ventas.reporte');
 
-    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
-    Route::get('/clientes/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
+Route::post('/ventas/store', [VentaController::class, 'store'])->name('ventas.store');
+Route::get('/ventas/{venta}/show', [VentaController::class, 'show'])->name('ventas.show');
+Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+Route::get('/ventas/reporte', [VentaController::class, 'reporte'])->name('ventas.reporte');
 
-    Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
-    Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
-    Route::get('/proveedores/edit', [ProveedorController::class, 'edit'])->name('proveedores.edit');
-});
+Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
+Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
+Route::get('/clientes/{cliente}/show', [ClienteController::class, 'show'])->name('clientes.show');
+
+Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
+Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
+Route::get('/proveedores/{proveedor}/edit', [ProveedorController::class, 'edit'])->name('proveedores.edit');
+Route::get('/proveedores/{proveedor}/show', [ProveedorController::class, 'show'])->name('proveedores.show');
+
 
 Route::middleware(['auth', 'role:Administrador'])->group(function () {
-    Route::get('/ventas/create', [VentaController::class, 'create'])->name('ventas.create');
-    Route::post('/ventas/store', [VentaController::class, 'store'])->name('ventas.store');
-    Route::get('/ventas/{venta}/show', [VentaController::class, 'show'])->name('ventas.show');
     Route::get('/ventas/{venta}/edit', [VentaController::class, 'edit'])->name('ventas.edit');
     Route::put('/ventas/{venta}/update', [VentaController::class, 'update'])->name('ventas.update');
     Route::delete('/ventas/{venta}', [VentaController::class, 'destroy'])->name('ventas.destroy');
-    Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
-    Route::get('/ventas/reporte', [VentaController::class, 'reporte'])->name('ventas.reporte');
 
-    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
-    Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
-    Route::get('/clientes/{cliente}/show', [ClienteController::class, 'show'])->name('clientes.show');
     Route::post('/clientes/store', [ClienteController::class, 'store'])->name('clientes.store');
     Route::put('/clientes/{cliente}/update', [ClienteController::class, 'update'])->name('clientes.update');
     Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
 
-    Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
-    Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
-    Route::get('/proveedores/{proveedor}/edit', [ProveedorController::class, 'edit'])->name('proveedores.edit');
-    Route::get('/proveedores/{proveedor}/show', [ProveedorController::class, 'show'])->name('proveedores.show');
     Route::post('/proveedores/store', [ProveedorController::class, 'store'])->name('proveedores.store');
     Route::put('/proveedores/{proveedor}/update', [ProveedorController::class, 'update'])->name('proveedores.update');
     Route::delete('/proveedores/{proveedor}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
