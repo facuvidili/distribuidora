@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
+use App\Models\Proveedor;
 
 class VentaTest extends TestCase
 {
@@ -36,6 +37,7 @@ class VentaTest extends TestCase
     {
         $cliente = Cliente::factory()->create();
         $venta = Venta::factory()->create(['cliente_id' => $cliente->id]);
+        $provedor = Proveedor::factory()->create();
         $producto = Producto::factory()->create();
 
         // Asociar un producto con la venta

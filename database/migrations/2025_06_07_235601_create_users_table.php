@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -22,6 +24,14 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        // Crear usuario administrador
+        User::create([
+            'name' => 'Facundo Vidili',
+            'email' => 'facuvidili@gmail.com',
+            'password' => Hash::make('12345678'),
+            'rol_id' => 1, // Asegurate de que este ID corresponda al rol de administrador
+        ]);
     }
 
     /**
