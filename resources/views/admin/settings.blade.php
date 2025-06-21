@@ -28,7 +28,13 @@
 
                 <div>
                     <label class="block text-gray-700 font-semibold">Correo Electrónico</label>
-                    <input type="email" name="email" value="{{ old('email', $user->email) }}" class="form-control" required>
+                    <input type="email" name="email" value="{{ old('email', $user->email) }}" class="form-control"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold">Contraseña Actual</label>
+                    <input type="password" name="current_password" class="form-control" required>
+                    <small class="text-gray-500">Ingresa tu contraseña actual para confirmar los cambios.</small>
                 </div>
 
                 <div>
