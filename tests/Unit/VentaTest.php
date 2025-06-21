@@ -6,12 +6,10 @@ use Tests\TestCase;
 use App\Models\Venta;
 use App\Models\Cliente;
 use App\Models\Producto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class VentaTest extends TestCase
 {
-    use RefreshDatabase; // Limpia la base de datos después de cada prueba
-
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
     /** @test */
     public function una_venta_se_puede_crear_correctamente()
     {
@@ -21,7 +19,7 @@ class VentaTest extends TestCase
         // Crear una venta
         $venta = Venta::create([
             'cliente_id' => $cliente->id,
-            'fecha_venta' => now(),
+            'fecha_venta' => now('America/Argentina/Buenos_Aires'),
             'total' => 150.50,
             'user_id' => 1 // Simulación de usuario
         ]);

@@ -92,7 +92,7 @@ class ProductoController extends Controller
                 'nombre' => 'required|string|max:255',
                 'cantidad' => 'required|integer|min:0',
                 'precio' => 'required|numeric|min:0',
-                'codigo' => 'required|integer|min:1',
+                'codigo' => 'required|string|max:255',
                 'proveedor_id' => 'nullable|exists:proveedores,id',
             ]);
 

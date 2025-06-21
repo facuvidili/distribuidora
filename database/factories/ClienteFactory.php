@@ -16,6 +16,8 @@ class ClienteFactory extends Factory
             'direccion' => $this->faker->address(),
             'telefono' => $this->faker->numerify('##########'), // Número aleatorio
             'email' => $this->faker->unique()->safeEmail(),
+            'dni' => $this->faker->numerify('########'),
+            'activo' => $this->faker->boolean(100),
         ];
     }
 }
