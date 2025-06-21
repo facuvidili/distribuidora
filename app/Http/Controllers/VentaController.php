@@ -18,7 +18,7 @@ class VentaController extends Controller
     public function index()
     {
         try {
-            $ventas = Venta::with('cliente')->orderBy('fecha_venta', 'desc')->get();
+            $ventas = Venta::with('cliente')->orderBy('fecha_venta', 'asc')->get();
             return view('ventas.index', compact('ventas'));
         } catch (\Exception $e) {
             Log::error("Error al obtener ventas: " . $e->getMessage());
